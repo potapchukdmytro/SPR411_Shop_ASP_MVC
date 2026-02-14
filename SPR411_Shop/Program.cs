@@ -1,7 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using SPR411_Shop.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add dbcontext
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    string? connectionString = builder.Configuration.GetConnectionString("LocalDb");
+    options.UseSqlServer(connectionString);
+});
 
 var app = builder.Build();
 
@@ -25,5 +35,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.Seed();
 
 app.Run();

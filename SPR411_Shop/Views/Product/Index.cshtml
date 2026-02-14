@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ProductModel>
+@{
+    ViewData["Title"] = "Товари";
+}
+<div>
+    <h2 class="text-center">Список товарів</h2>
+
+    <div>
+        <table class="table table-striped text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Image</th>
+                    <th>+</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var product in Model)
+                {
+                    <tr>
+                        <td>@product.Id</td>
+                        <td>@product.Name</td>
+                        <td>@product.Price.ToString("#.##") ₴</td>
+                        <td>@(product.Category != null ? product.Category.Name : "Без категорії")</td>
+                        <td>@product.CreateDate.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            <img class="image-scale" height="50" src="@product.Image" alt="@product.Name">
+                        </td>
+                        <td>
+                            <a asp-route-id="@product.Id" asp-controller="Product" asp-action="Delete">
+                                <i class="bi bi-trash-fill" style="color: red"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

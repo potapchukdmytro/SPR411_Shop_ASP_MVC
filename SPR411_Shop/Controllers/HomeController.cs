@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SPR411_Shop.Data;
 using SPR411_Shop.Models;
 using System.Diagnostics;
 
@@ -6,19 +7,27 @@ namespace SPR411_Shop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(AppDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
+        // Home/Index
         public IActionResult Index()
         {
             return View();
         }
 
+        //Home/Privacy
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        // Home/AboutUs
+        public IActionResult AboutUs()
         {
             return View();
         }
