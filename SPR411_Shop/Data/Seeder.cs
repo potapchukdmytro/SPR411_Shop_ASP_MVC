@@ -20,6 +20,7 @@ namespace SPR411_Shop.Data
                     new CategoryModel
                     {
                         Name = "Процесори",
+                        Icon = "bi bi-cpu",
                         Products = new List<ProductModel>
                         {
                             new() { Name = "AMD Ryzen 5 5600X", Description = "6 ядер, 3.7–4.6 GHz", Price = 5999, Image = "https://m.media-amazon.com/images/I/61vGQNUEsGL._AC_SL1500_.jpg" },
@@ -33,6 +34,7 @@ namespace SPR411_Shop.Data
                     new CategoryModel
                     {
                         Name = "Відеокарти",
+                        Icon = "bi bi-gpu-card",
                         Products = new List<ProductModel>
                         {
                             new() { Name = "NVIDIA RTX 3060", Description = "12GB GDDR6", Price = 13500, Image = "https://m.media-amazon.com/images/I/71d1i7e4jSL._AC_SL1500_.jpg" },
@@ -46,6 +48,7 @@ namespace SPR411_Shop.Data
                     new CategoryModel
                     {
                         Name = "Материнські плати",
+                        Icon = "bi bi-motherboard",
                         Products = new List<ProductModel>
                         {
                             new() { Name = "ASUS TUF B550-PLUS", Description = "AM4, ATX", Price = 5200, Image = "https://m.media-amazon.com/images/I/81kY0z0g8kL._AC_SL1500_.jpg" },
@@ -59,6 +62,7 @@ namespace SPR411_Shop.Data
                     new CategoryModel
                     {
                         Name = "Оперативна пам'ять",
+                        Icon = "bi bi-memory",
                         Products = new List<ProductModel>
                         {
                             new() { Name = "Kingston Fury 16GB", Description = "DDR4 3200MHz", Price = 1800, Image = "https://m.media-amazon.com/images/I/71z1QF1sZsL._AC_SL1500_.jpg" },
@@ -72,6 +76,7 @@ namespace SPR411_Shop.Data
                     new CategoryModel
                     {
                         Name = "SSD накопичувачі",
+                        Icon = "bi bi-device-ssd",
                         Products = new List<ProductModel>
                         {
                             new() { Name = "Samsung 970 EVO Plus 1TB", Description = "NVMe", Price = 3600, Image = "https://m.media-amazon.com/images/I/81tw+Vh3J7L._AC_SL1500_.jpg" },

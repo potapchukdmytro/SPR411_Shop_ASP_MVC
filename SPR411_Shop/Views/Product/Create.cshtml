@@ -1,0 +1,44 @@
+﻿@model CreateProductVM
+@{
+    ViewData["Title"] = "Додавання товару";
+}
+
+<h2 class="text-center">Додавання нового товару</h2>
+<div class="w-50 mx-auto px-5 py-2" style="background-color: whitesmoke;">
+    <form method="post"
+          enctype="multipart/form-data"
+          asp-controller="Product"
+          asp-action="Create">
+        <div>
+            <label for="name" class="form-label mt-4">Назва</label>
+            <input name="name" asp-for="Name" type="text" class="form-control" placeholder="RTX 4090">
+            <span asp-validation-for="Name" class="mx-2 text-danger" style="font-size: 12px;"></span>
+        </div>
+        <div>
+            <label for="description" class="form-label mt-4">Опис</label>
+            <input name="description" asp-for="Description" type="text" class="form-control" placeholder="Опис товару">
+            <span asp-validation-for="Description" class="mx-2 text-danger" style="font-size: 12px;"></span>
+        </div>
+        <div>
+            <label for="price" class="form-label mt-4">Ціна (грн)</label>
+            <input name="price" asp-for="Price" min="0" type="number" class="form-control" placeholder="Ціна товару">
+            <span asp-validation-for="Price" class="mx-2 text-danger" style="font-size: 12px;"></span>
+        </div>
+        <div>
+            <label for="categoryId" class="form-label mt-4">Категорія</label>
+            <select asp-items="Model.SelectItems" name="categoryId" asp-for="CategoryId" class="form-select">
+                <option selected value="0">Без категорії</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="mx-2 text-danger" style="font-size: 12px;"></span>
+        </div>
+        <div>
+            <label for="image" class="form-label mt-4">Зображення</label>
+            <input accept="image/*" name="image" asp-for="Image" type="file" class="form-control">
+            <span asp-validation-for="Image" class="mx-2 text-danger" style="font-size: 12px;"></span>
+        </div>
+        <div class="my-4 d-flex justify-content-center">
+            <button class="btn btn-success mx-2 w-25" type="submit">Додати</button>
+            <a asp-action="Index" class="btn btn-dark mx-2 w-25">Повернутися</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,12 @@
+﻿@model ProductModel
+
+<div class="card col-xl-2 col-lg-4 col-md-6 col-sm-12 block-scale-hover" style="border-radius: 0;">
+    <img style="object-fit:contain;" height="200" src="~/images/@(string.IsNullOrWhiteSpace(Model.Image) ? "noimage.png" : $"products/{Model.Image}")" class="card-img-top" alt="@Model.Name">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <h6>@(Model.Category != null ? Model.Category.Name : "Без категорії")</h6>
+        <partial name="_Rating" model="Model.Rating"/>
+        <h2>@Model.Price.ToString("#.##") ₴</h2>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>

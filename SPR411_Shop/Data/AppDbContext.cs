@@ -32,6 +32,9 @@ namespace SPR411_Shop.Data
 
                 e.Property(p => p.Price)
                     .HasColumnType("decimal(18, 2)");
+
+                e.Property(p => p.Rating)
+                    .HasDefaultValue(0);
             });
 
             // Category
@@ -42,6 +45,9 @@ namespace SPR411_Shop.Data
                 e.Property(c => c.Name)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                e.Property(c => c.Icon)
+                    .HasMaxLength(25);
             });
 
             // Relationships

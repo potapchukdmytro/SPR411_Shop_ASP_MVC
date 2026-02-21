@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Товари";
 }
-<div>
+<div class="container">
     <h2 class="text-center">Список товарів</h2>
 
     <div>
@@ -15,7 +15,11 @@
                     <th>Category</th>
                     <th>Date</th>
                     <th>Image</th>
-                    <th>+</th>
+                    <th>
+                        <a class="text-white" asp-controller="Product" asp-action="Create">
+                            <i class="bi bi-plus-circle-fill"></i>
+                        </a>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +32,7 @@
                         <td>@(product.Category != null ? product.Category.Name : "Без категорії")</td>
                         <td>@product.CreateDate.ToString("dd.MM.yyyy")</td>
                         <td>
-                            <img class="image-scale" height="50" src="@product.Image" alt="@product.Name">
+                            <img class="image-scale" height="50" src="~/images/@(string.IsNullOrWhiteSpace(product.Image) ? "noimage.png" : $"products/{product.Image}")" alt="@product.Name">
                         </td>
                         <td>
                             <a asp-route-id="@product.Id" asp-controller="Product" asp-action="Delete">

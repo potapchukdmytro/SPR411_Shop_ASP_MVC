@@ -34,3 +34,19 @@ body {
     transform: scale(1.5);
     transition: transform 0.1s ease-in-out;
 }
+
+.aside-link {
+    padding: 4px 8px;
+}
+
+.aside-link:hover {
+    color: dimgrey;
+    background-color: lightgrey;
+    border-radius: 4px;
+}
+
+.block-scale-hover:hover {
+    scale: 1.05;
+    transition: scale 0.1s ease-in-out;
+    cursor: pointer;
+}
