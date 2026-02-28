@@ -17,7 +17,7 @@ namespace SPR411_Shop.Controllers
         }
 
         // Home/Index
-        public async Task<IActionResult> Index(string? category)
+        public async Task<IActionResult> Index([FromQuery]string? category, [FromQuery]PaginationVM pagination)
         {
             var categories = await _context.Categories.ToListAsync();
             IQueryable<ProductModel> products = _context.Products;
@@ -36,11 +36,28 @@ namespace SPR411_Shop.Controllers
                 products = products.Where(p => p.CategoryId == queryCategory.Id);
             }
 
+            // pagination
+            int totalCount = products.Count();
+            int pageSize = pagination.PageSize < 1 ? 24 : pagination.PageSize;
+            int pageCount = (int)Math.Ceiling((double)totalCount / pageSize);
+            int page = pagination.Page < 1 || pagination.Page > pageCount ? 1 : pagination.Page;
+
+            pagination.Page = page;
+            pagination.TotalCount = totalCount;
+            pagination.PageCount = pageCount;
+            pagination.PageSize = pageSize;
+
+            products = products
+                .OrderBy(p => p.Id)
+                .Skip(pageSize * (page - 1))
+                .Take(pageSize);
 
             var viewModel = new HomeVM
             {
                 Products = await products.ToListAsync(),
-                Categories = categories
+                Categories = categories,
+                Pagination = pagination,
+                Category = category
             };
 
             return View(viewModel);

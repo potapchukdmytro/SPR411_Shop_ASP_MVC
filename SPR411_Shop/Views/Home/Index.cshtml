@@ -20,5 +20,132 @@
                 <partial name="_ProductCard" model="product" />
             }
         </div>
+        <div class="d-flex justify-content-center mt-4">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="First group">
+                    <a class="btn btn-secondary @(Model.Pagination.Page == 1 ? "disabled" : "")"
+                       asp-controller="Home"
+                       asp-action="Index"
+                       asp-route-page="@(Model.Pagination.Page - 1)"
+                       asp-route-category="@Model.Category">
+                        <i class="bi bi-chevron-double-left"></i>
+                    </a>
+
+                    <a class="btn @(Model.Pagination.Page == 1 ? "btn-dark" : "btn-secondary")"
+                       asp-controller="Home"
+                       asp-action="Index"
+                       asp-route-page="1"
+                       asp-route-category="@Model.Category">
+                        1
+                    </a>
+                    @if (Model.Pagination.Page <= 4)
+                    {
+                        for (int i = 2; i <= 8 && i <= Model.Pagination.PageCount; i++)
+                        {
+                            if (i == 8)
+                            {
+                                <a class="btn @(Model.Pagination.Page == i ? "btn-dark" : "btn-secondary")"
+                                   asp-controller="Home"
+                                   asp-action="Index"
+                                   asp-route-page="@i"
+                                   asp-route-category="@Model.Category">
+                                    ...
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn @(Model.Pagination.Page == i ? "btn-dark" : "btn-secondary")"
+                                   asp-controller="Home"
+                                   asp-action="Index"
+                                   asp-route-page="@i"
+                                   asp-route-category="@Model.Category">
+                                    @i
+                                </a>
+                            }
+                        }
+                    }
+                    else if (Model.Pagination.Page >= Model.Pagination.PageCount - 4)
+                    {
+                        for (int i = Model.Pagination.PageCount - 7; i < Model.Pagination.PageCount; i++)
+                        {
+                            if (i == Model.Pagination.PageCount - 7)
+                            {
+                                <a class="btn @(Model.Pagination.Page == i ? "btn-dark" : "btn-secondary")"
+                                   asp-controller="Home"
+                                   asp-action="Index"
+                                   asp-route-page="@i"
+                                   asp-route-category="@Model.Category">
+                                    ...
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn @(Model.Pagination.Page == i ? "btn-dark" : "btn-secondary")"
+                                   asp-controller="Home"
+                                   asp-action="Index"
+                                   asp-route-page="@i"
+                                   asp-route-category="@Model.Category">
+                                    @i
+                                </a>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        @for (int i = -3; i < 4; i++)
+                        {
+                            if (i == -3)
+                            {
+                                <a class="btn @(Model.Pagination.Page == i ? "btn-dark" : "btn-secondary")"
+                                   asp-controller="Home"
+                                   asp-action="Index"
+                                   asp-route-page="@(Model.Pagination.Page + i)"
+                                   asp-route-category="@Model.Category">
+                                    ...
+                                </a>
+                            }
+                            else if (i == 3)
+                            {
+                                <a class="btn @(Model.Pagination.Page == Model.Pagination.Page + i ? "btn-dark" : "btn-secondary")"
+                                   asp-controller="Home"
+                                   asp-action="Index"
+                                   asp-route-page="@(Model.Pagination.Page + i)"
+                                   asp-route-category="@Model.Category">
+                                    ...
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn @(Model.Pagination.Page == Model.Pagination.Page + i ? "btn-dark" : "btn-secondary")"
+                                   asp-controller="Home"
+                                   asp-action="Index"
+                                   asp-route-page="@(Model.Pagination.Page + i)"
+                                   asp-route-category="@Model.Category">
+                                    @(Model.Pagination.Page + i)
+                                </a>
+                            }
+                        }
+                    }
+                    @if (Model.Pagination.PageCount != 1 && Model.Pagination.PageCount >= 9)
+                    {
+                        <a class="btn @(Model.Pagination.Page == Model.Pagination.PageCount ? "btn-dark" : "btn-secondary")"
+                           asp-controller="Home"
+                           asp-action="Index"
+                           asp-route-page="@Model.Pagination.PageCount"
+                           asp-route-category="@Model.Category">
+                            @Model.Pagination.PageCount
+                        </a>
+                    }
+
+                    <a class="btn btn-secondary @(Model.Pagination.Page == Model.Pagination.PageCount ? "disabled" : "")"
+                       asp-controller="Home"
+                       asp-action="Index"
+                       asp-route-page="@(Model.Pagination.Page + 1)"
+                       asp-route-category="@Model.Category">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </main>
 </div>

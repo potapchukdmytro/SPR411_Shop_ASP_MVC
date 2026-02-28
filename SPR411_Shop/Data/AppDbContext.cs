@@ -35,6 +35,9 @@ namespace SPR411_Shop.Data
 
                 e.Property(p => p.Rating)
                     .HasDefaultValue(0);
+
+                e.Property(p => p.Amount)
+                    .HasDefaultValue(0);
             });
 
             // Category
