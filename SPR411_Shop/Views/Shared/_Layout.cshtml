@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor ContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -30,11 +31,24 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="AboutUs">Про нас</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Товари</a>
-                        </li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Товари</a>
+                            </li>
+                        }
                     </ul>
-                    <div class="flex-grow-0">
+                    <div class="flex-grow-0 d-flex">
+                        <a asp-controller="Cart" asp-action="Index">
+                            <div class="me-4">
+                                <i class="bi bi-cart4 position-relative text-dark" style="font-size: 2em;">
+                                    <span class="position-absolute bg-success start-100 translate-middle badge rounded-pill" style="font-size: 12px; top: 8px;">
+                                        @CartService.GetCount(ContextAccessor.HttpContext!.Session)
+                                        <span class="visually-hidden">unread messages</span>
+                                    </span>
+                                </i>
+                            </div>
+                        </a>
                         <partial name="_LoginPartial" />
                     </div>
                 </div>

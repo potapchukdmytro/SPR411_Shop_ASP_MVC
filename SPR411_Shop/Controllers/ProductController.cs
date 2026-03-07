@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Build.Tasks.Deployment.Bootstrapper;
 using Microsoft.EntityFrameworkCore;
 using SPR411_Shop.Data;
 using SPR411_Shop.Models;
@@ -7,6 +9,7 @@ using SPR411_Shop.ViewModels;
 
 namespace SPR411_Shop.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ProductController : Controller
     {
         private readonly AppDbContext _context;
@@ -77,6 +80,91 @@ namespace SPR411_Shop.Controllers
             }
 
             await _context.Products.AddAsync(model);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            var categories = await _context.Categories.ToListAsync();
+            var model = _context.Products.Find(id);
+
+            if(model == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var viewModel = new UpdateProductVM
+            {
+                Id = model.Id,
+                CategoryId = model.CategoryId,
+                Description = model.Description,
+                CreateDate = model.CreateDate,
+                Name = model.Name,
+                Price = model.Price,
+                Amount = model.Amount,
+                Rating = model.Rating,
+                SelectItems = categories.Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                })
+            };
+
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update([FromForm] UpdateProductVM viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var categories = await _context.Categories.ToListAsync();
+                viewModel.SelectItems = categories.Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                });
+                return View(viewModel);
+            }
+
+            var model = _context.Products.Find(viewModel.Id);
+
+            if(model == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            model.Id = viewModel.Id;
+            model.CategoryId = viewModel.CategoryId <= 0 ? null : viewModel.CategoryId;
+            model.Name = viewModel.Name;
+            model.Description = viewModel.Description;
+            model.Price = viewModel.Price;
+            model.CreateDate = viewModel.CreateDate;
+            model.Amount = viewModel.Amount;
+            model.Rating = viewModel.Rating;
+
+            if (viewModel.Image != null)
+            {
+                if(!string.IsNullOrWhiteSpace(model.Image))
+                {
+                    // Remove image file
+                    string root = _environment.WebRootPath;
+                    string imagesPath = Path.Combine(root, "images", "products");
+                    string filePath = Path.Combine(imagesPath, model.Image);
+
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
+                model.Image = await SaveImageAsync(viewModel.Image);
+            }
+
+            _context.Products.Update(model);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");

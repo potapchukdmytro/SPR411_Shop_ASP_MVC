@@ -36,6 +36,15 @@ builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
 // Add services
 builder.Services.AddScoped<IEmailSender, EmailService>();
 
+// Add session
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession(cfg =>
+{
+    cfg.Cookie.IsEssential = true; // робить cookie важливими
+    cfg.Cookie.HttpOnly = true;    // забороняє доступатися до кукі через js
+    cfg.IdleTimeout = TimeSpan.FromHours(1); // час бездіяльності після якого сесія автоматично закриється
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,6 +57,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+// Session
+app.UseSession();
 
 // For identity
 app.MapRazorPages();

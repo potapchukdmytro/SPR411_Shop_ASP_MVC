@@ -7,5 +7,7 @@ namespace SPR411_Shop.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Image { get; set; }
+
+        public List<CartModel> Cart { get; set; } = [];
     }
 }

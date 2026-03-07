@@ -13,6 +13,7 @@ namespace SPR411_Shop.Data
 
         public DbSet<ProductModel> Products { get; set; }
         public DbSet<CategoryModel> Categories { get; set; }
+        public DbSet<CartModel> CartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -54,12 +55,33 @@ namespace SPR411_Shop.Data
                     .HasMaxLength(25);
             });
 
+            // Cart
+            builder.Entity<CartModel>(e =>
+            {
+                e.HasKey(c => c.Id);
+
+                e.Property(c => c.Count)
+                .HasDefaultValue(1);
+            });
+
             // Relationships
             builder.Entity<CategoryModel>()
                 .HasMany(c => c.Products)
                 .WithOne(p => p.Category)
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<CartModel>()
+                .HasOne(c => c.Product)
+                .WithMany(p => p.Cart)
+                .HasForeignKey(c => c.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<CartModel>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Cart)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(builder);
         }

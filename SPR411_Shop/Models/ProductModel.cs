@@ -13,5 +13,7 @@
 
         public int? CategoryId { get; set; }
         public CategoryModel? Category { get; set; }
+
+        public List<CartModel> Cart { get; set; } = [];
     }
 }
